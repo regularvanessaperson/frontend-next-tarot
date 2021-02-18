@@ -7,18 +7,18 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Welcome to Tarot Journal</title>
+        <title>Welcome to Tarot Journal Homepage</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
     
     
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Tarot Journal Homepage lol
+          Welcome to Tarot Journal Homepage Route
         </h1>
 
         
-          <Link href="/user/food" as={'/user/food'} >
+          {/* <Link href="/user/food" as={'/user/food'} >
           <a> Yaas the party is food!</a>
         </Link>
         <Link href="/auth/login" as={'/auth/login'} >
@@ -27,7 +27,7 @@ export default function Home() {
         <Link href="/auth/register" as={'/auth/register'} >
           <a> Register</a>
           {/* <Register /> */}
-        </Link>
+        {/* </Link> */} 
   
       </main>
 
