@@ -41,7 +41,7 @@ const Layout = (props) => {
   return (
 
     <div> {currentUser ? (
-      <div className="flex flex-wrap bg-gray-100 w-full h-screen" >
+      <div className="flex flex-wrap bg-gray-100 w-full  ">
         <div className="w-3/12 bg-white rounded p-3 shadow-lg">
           <div className="flex items-center space-x-4 p-2 mb-5">
             <Link href="/" to={"/"}>
@@ -79,7 +79,7 @@ const Layout = (props) => {
             <li>
               <Link href={"/user/userProfile/"+currentUser.id} to="/user/userProfile/[idx]">
                 <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
-                  <span class="text-gray-600">
+                  <span className="text-gray-600">
                   </span>
                   <span>{currentUser.username} profile</span>
                 </a>
@@ -88,7 +88,7 @@ const Layout = (props) => {
             <li>
               <Link href="/"  >
                 <a onClick={logOut} className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
-                  <span class="text-gray-600">
+                  <span className="text-gray-600">
                   </span>
                   <span>Logout</span>
                 </a>
@@ -98,8 +98,8 @@ const Layout = (props) => {
         </div>
 
 
-        <div class="w-9/12">
-          <div class="p-4 text-gray-500">
+        <div className="w-9/12">
+          <div className="p-4 text-gray-500">
             {props.children}
           </div>
         </div>
@@ -107,18 +107,18 @@ const Layout = (props) => {
 
     ) : (
         <div>
-        <div class="flex flex-wrap bg-gray-100 w-full h-screen" >
-        <div class="w-3/12 bg-white rounded p-3 shadow-lg">
-          <div class="flex items-center space-x-4 p-2 mb-5">
+        <div className="flex flex-wrap bg-gray-100 w-full" >
+        <div className="w-3/12 bg-white rounded p-3 shadow-lg">
+          <div className="flex items-center space-x-4 p-2 mb-5">
             <Link href="/" to={"/"}>
               <h4>Tarot Journal</h4>
             </Link>
           </div>
-          <ul class="space-y-2 text-sm">
+          <ul className="space-y-2 text-sm">
             <li>
               <Link href="/auth/login" to={"/auth/login"} >
-                <a href="" class="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
-                  <span class=" text-gray-600">
+                <a href="" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
+                  <span className=" text-gray-600">
                   </span>
                   <span>Login</span>
                 </a>
@@ -126,8 +126,8 @@ const Layout = (props) => {
             </li>
             <li>
               <Link href="/auth/register" to={'/auth/register'}>
-                <a href="#" class="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
-                  <span class="text-gray-600">
+                <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
+                  <span className="text-gray-600">
                   </span>
                   <span>Signup</span>
                 </a>
@@ -135,8 +135,8 @@ const Layout = (props) => {
             </li>
           </ul>
           </div>
-          <div class="w-9/12">
-          <div class="p-4 text-gray-500">
+          <div className="w-9/12">
+          <div className="p-4 text-gray-500">
             {props.children}
           </div>
         </div>

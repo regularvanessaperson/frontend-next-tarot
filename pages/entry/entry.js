@@ -1,7 +1,13 @@
 import Entry from '../../components/Entry'
+// import Reading from '../../components/Reading'
 
 const entry = () =>{
-    return <Entry />
+    return (
+     <div> 
+    <Entry />
+    {/* <Reading /> */}
+    </div>  
+    )
 }
 
 export default entry
