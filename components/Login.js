@@ -62,8 +62,8 @@ const Login = (props) => {
         if (checkBtn.current.context._errors.length === 0) {
             login(username, password).then(
                 () => {
-                    router.push("/user/userProfile/[id]")
-                    window.location.reload()
+                    router.push('/')
+                    // window.location.reload()
                 },
                 (error) => {
                     //Setting loading to false and return the error
@@ -132,6 +132,7 @@ export const login = (username, password) => {
     .then((response)=> {
         //Check if the response of user has accessToken
         if(response.data.accessToken){
+            console.log("is there a token",response.data.accessToken)
             setItem('user', response.data)
         }
         return response.data
