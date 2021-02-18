@@ -1,10 +1,7 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 //Helper funciton to get access to token for header
-import authHeader from '../utilities/authHeader.utilities'
 import { getItem } from '../utilities/localStorage.utilities'
 
-const API_URL = "http://localhost:8080/api/"//get user profile
 
 const Profile = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
@@ -20,7 +17,7 @@ const Profile = () => {
 
         }
     }, []);
-    // const currentUser = getCurrentUser()
+
 
     return (
 
@@ -59,10 +56,6 @@ export const getCurrentUser = () => {
     return getItem('user')
 }
 
-export const userProfile = (
-    idx
-) => {
-    return axios.get(API_URL + 'user/profile/' + idx)
-}
+
 
 export default Profile
