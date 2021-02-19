@@ -6,7 +6,7 @@ import axios from 'axios'
 const Timeline = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [currentFeed, setCurrentFeed] = useState([])
-    const [displayTimeline, setDisplayTimeline ] = useState([])
+    const [displayReading, setDisplayReading] = useState({})
 
 
     useEffect(() => {
@@ -16,16 +16,43 @@ const Timeline = () => {
             setCurrentUser(thisUser)
         }
         feed(thisUser.id).then(data => {
-            let entries = data.data.entries
-            console.log("what is here", data)
-            setCurrentFeed(entries)
+            let entryArray = data.data.entries
+            console.log("what is here", entryArray)
+            setCurrentFeed(entryArray)
+            if (entryArray.filter(entry => entry.readingId === true)) {
+                entryArray.map(eachEntry => {
+                    // if (eachEntry.readingId === true) {
+                        getReading(eachEntry.readingId).then(readingsThere => {
+                            console.log("what are the readings", readingsThere)
+                            setDisplayReading(readingsThere)
+                        })
+                        .then(eachIndividualReading =>{
+                            console.log("what is this", eachIndividualReading)
+                            
+                        })
+                    // }
+                })
+            }
         })
+
 
     }, []);
 
-    const returnTimeline = currentFeed.map(entry =>{
-            return(
-                <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" key={entry._id}>
+
+
+
+
+
+    const returnTimeline = currentFeed.map(entry => {
+        // if(entry.readingId){
+        //     getReading(entry.readingId).then(readingInfo=>{
+        //         setDisplayReading(readingInfo)
+        //     }) 
+        // }
+
+
+        return (
+            <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" key={entry._id}>
                 <div class="w-full md:w-3/3 px-4 py-4 bg-white rounded-lg">
                     <div class="flex items-center">
                         <h2 class="text-xl text-gray-800 font-medium mr-auto">{entry.date}</h2>
@@ -35,19 +62,20 @@ const Timeline = () => {
                     </p>
                     <div class="flex items-center justify-end mt-4 top-auto">
                         <button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Favorite</button>
-                        {entry.readingId &&(
-                        <div>
-                        <button class=" bg-gray-200 text-blue-600 px-2 py-2 rounded-md mr-2">Edit</button>
-                        <button class=" bg-blue-600 text-gray-200 px-2 py-2 rounded-md ">Publish</button>
-                        </div>
+                        <button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Edit</button>
+                        {(entry.readingId === displayReading._id) && (
+                            <div>
+                                <img class=" bg-gray-200 text-blue-600 px-2 py-2 rounded-md mr-2" />
+                                <button class=" bg-blue-600 text-gray-200 px-2 py-2 rounded-md ">Publish</button>
+                            </div>
                         )}
 
                     </div>
                 </div>
             </div>
-            )
-        })
-        
+        )
+    })
+
 
     return (
         <div>
@@ -71,6 +99,13 @@ export const feed = (
     return axios.get(API_URL + 'user/entry/feed/' + idx, {
         idx
     })
+}
+
+
+export const getReading = (
+    idx
+) => {
+    return axios.get(API_URL + 'reading/' + idx)
 }
 
 export default Timeline
