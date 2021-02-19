@@ -16,7 +16,7 @@ const Profile = () => {
             setCurrentUser(thisUser);
 
         }
-    }, []);
+    }, [currentUser]);
 
 
     return (
@@ -50,6 +50,8 @@ const Profile = () => {
         </div>
     )
 }
+
+
 
 //get current user
 export const getCurrentUser = () => {
