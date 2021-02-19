@@ -16,6 +16,7 @@ import ButtonSpinner from './common/ButtonSpinner'
 import {resMessage} from '../utilities/functions.utilities'
 
 import {login} from './Login'
+import { getCurrentUser } from "./Layout";
 
 const API_URL="http://localhost:8000/api/auth/"
 
@@ -64,7 +65,7 @@ const vemail = (value) => {
 }
 
 
-const Register = (props) => {
+const Register = () => {
     const form = useRef()
     const checkBtn = useRef()
     const router = useRouter()
@@ -186,5 +187,7 @@ export const register =(username, email, password) => {
         password
     })
 }
+
+
 
 export default Register
