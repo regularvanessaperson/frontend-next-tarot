@@ -22,20 +22,22 @@ const Today = () => {
         if (reading !== "") {
             sendReadingInfo()
         }
-        getTodaysEntry(thisUser.id).then((val)=>{
-            if (val) {
-                setEntryId(val.data._id)
-                setEntry(val.data.body)
+        getTodaysEntry(thisUser.id).then((value)=>{
+            if (value) {
+                setEntryId(value.data._id)
+                setEntry(value.data.body)
+                setReading(value.data.readingId)
             }
         })
     }, []);
 
-    const refreshData = () => {
-        router.replace(router.asPath);
-      }
+    // const goToEntry = () => {
+    //     router.push("/entry/entry/[idx]");
+    //   }
     
 
     const handleEntry = (e) => {
+        e.preventDefault()
         console.log("we are handling this entry")
         const body = entry
         if (reading) {
@@ -53,25 +55,27 @@ const Today = () => {
     const onMakeEntry = (e) => {
         const entryText = e.target.value
         setEntry(entryText)
+        router.push("/entry/entry/[idx]");
         console.log(entry)
     }
 
-    const createReading = (e) => {
+    const handleReading = (e) => {
+        // e.preventDefault()
         if (entry) {
-            generateReading(entry._id)
+            generateReading(entryId)
             setReading(reading)
-            refreshData()
+            router.push('/entry/today')
             console.log(reading)
 
         }
 
     }
 
-    const sendReadingInfo = () => {
-        getReading(reading._id).then(currentReading => {
-            setViewReading(currentReading)
-        })
-    }
+    // const sendReadingInfo = () => {
+    //     getReading(entry._id).then(currentReading => {
+    //         setViewReading(currentReading)
+    //     })
+    // }
 
     return (
         <div>
@@ -92,7 +96,7 @@ const Today = () => {
                             <div>
                                 <div>
                                     <h1 class="text-center text-2xl font-bold p-4 bg-gray-800 text-gray-400">Generate Daily Reading</h1>
-                                    <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-64" >
+                                    <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" >
                                         <div class="w-full md:w-3/3 px-4 py-4 bg-white rounded-lg">
                                             <div class="flex items-center">
                                                 <h2 class="text-xl text-gray-800 font-medium mr-auto">Three Card Spread</h2>
@@ -106,64 +110,68 @@ const Today = () => {
                                                 <p>3. The third card represents the outcome.</p>
                                             </div>
                                             <div class="grid   justify-center mt-5 top-auto">
-                                                <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" value={reading} handleClick={createReading} />
+                                                <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {reading && (
+                                {reading ? (
                                     <div class="flex flex-col justify-center items-center">
-                                        <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-64" >
-                                            <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src="https://ik.imagekit.io/q5edmtudmz/FB_IMG_15658659197157667_wOd8n5yFyXI.jpg" alt="bag" />
-                                            <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg">
+                                        <div class="md:flex shadow-lg  mx-5 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" >
+                                            <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src={reading.firstCard.image} alt="bag" />
+                                            <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg ">
                                                 <div class="flex items-center">
-                                                    <h2 class="text-xl text-gray-800 font-medium mr-auto">{viewReading.firstCard.name}</h2>
+                                                    <h2 class="text-xl text-gray-800 font-medium mr-auto">{reading.firstCard.name}</h2>
                                                     <p class="text-gray-800 font-semibold tracking-tighter">
                                                         Past</p>
                                                 </div>
+                                                
+                                                <p class="text-sm text-gray-700 mt-1" >
+                                                    Description: {reading.firstCard.description}
+                                                </p>
                                                 <p class="text-sm text-gray-700 mt-1">
-                                                    Description: Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
-                                            </p>
-                                                <p class="text-sm text-gray-700 mt-1">
-                                                    Meaning: Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
-                                            </p>
+                                                    Meaning: {reading.firstCard.meaning}
+                                                </p>
+                                               
                                             </div>
                                         </div>
 
-                                        <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-64" >
-                                            <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src="https://ik.imagekit.io/q5edmtudmz/FB_IMG_15658659197157667_wOd8n5yFyXI.jpg" alt="bag" />
+                                        <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" >
+                                            <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src={reading.secondCard.image} alt="bag" />
                                             <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg">
                                                 <div class="flex items-center">
-                                                    <h2 class="text-xl text-gray-800 font-medium mr-auto">Card Name</h2>
+                                                    <h2 class="text-xl text-gray-800 font-medium mr-auto">{reading.secondCard.name}</h2>
                                                     <p class="text-gray-800 font-semibold tracking-tighter">
                                                         Present</p>
                                                 </div>
                                                 <p class="text-sm text-gray-700 mt-1">
-                                                    Description: Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
+                                                    Description: {reading.secondCard.description}
                                             </p>
                                                 <p class="text-sm text-gray-700 mt-1">
-                                                    Meaning: Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
+                                                    Meaning: {reading.thirdCard.meaning}
                                             </p>
                                             </div>
                                         </div>
-                                        <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-64" >
-                                            <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src="https://ik.imagekit.io/q5edmtudmz/FB_IMG_15658659197157667_wOd8n5yFyXI.jpg" alt="bag" />
+                                        <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" >
+                                            <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src={reading.thirdCard.image} alt="bag" />
                                             <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg">
                                                 <div class="flex items-center">
-                                                    <h2 class="text-xl text-gray-800 font-medium mr-auto">Card Name</h2>
+                                                    <h2 class="text-xl text-gray-800 font-medium mr-auto">{reading.thirdCard.name}</h2>
                                                     <p class="text-gray-800 font-semibold tracking-tighter">
                                                         Future</p>
                                                 </div>
                                                 <p class="text-sm text-gray-700 mt-1">
-                                                    Description: Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
+                                                    Description: {reading.thirdCard.description}
                                             </p>
                                                 <p class="text-sm text-gray-700 mt-1">
-                                                    Meaning: Lorem, ipsum dolor sit amet consectetur Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequ adipisicing elit. Amet veritatis ipsam reiciendis numquam tempore commodi ipsa suscipit laboriosam, sit earum at sequi.
+                                                    Meaning:{reading.thirdCard.meaning}
                                             </p>
                                             </div>
                                         </div >
                                     </div>
-                                )}
+                                ): (
+                                    <div>No reading yet</div>
+                                )} 
                             </div>
                         </div>
                     </div>
@@ -211,11 +219,7 @@ export const generateReading = (
 ) => {
     return axios
         .post(API_URL + 'reading', {
-            entryId,
-            date,
-            firstCard,
-            secondCard,
-            thirdCard
+            entryId
         })
 }
 
