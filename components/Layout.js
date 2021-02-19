@@ -41,7 +41,7 @@ const Layout = (props) => {
   return (
 
     <div> {currentUser ? (
-      <div className="flex flex-wrap bg-gray-100 w-full  ">
+      <div className="flex flex-wrap bg-gray-100 w-full h-screen ">
         <div className="w-3/12 bg-white rounded p-3 shadow-lg">
           <div className="flex items-center space-x-4 p-2 mb-5">
             <Link href="/" to={"/"}>
@@ -50,7 +50,7 @@ const Layout = (props) => {
           </div>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/entry/entry" to={"/entry/entry"}>
+              <Link href="/entry/today" to={"/entry/today"}>
                 <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
                   <span className="text-gray-600">
                   </span>
@@ -107,7 +107,7 @@ const Layout = (props) => {
 
     ) : (
         <div>
-        <div className="flex flex-wrap bg-gray-100 w-full" >
+        <div className="flex flex-wrap bg-gray-100 w-full h-screen" >
         <div className="w-3/12 bg-white rounded p-3 shadow-lg">
           <div className="flex items-center space-x-4 p-2 mb-5">
             <Link href="/" to={"/"}>
