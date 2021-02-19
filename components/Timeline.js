@@ -16,15 +16,21 @@ const Timeline = () => {
             setCurrentUser(thisUser)
         }
         feed(thisUser.id).then(data => {
-            let entries = data.data.entries
-            console.log("what is here", data.data.entries)
-            setCurrentFeed(entries)
-            if(entries.some(entry =>entry.readingId)){
-                entries.map(eachEntry=>{
-                    console.log(eachEntry)
-                    getReading(eachEntry.readingId).then(readingId=>{
-                        setDisplayReading(readingId)
-                    })
+            let entryArray = data.data.entries
+            console.log("what is here", entryArray)
+            setCurrentFeed(entryArray)
+            if (entryArray.filter(entry => entry.readingId === true)) {
+                entryArray.map(eachEntry => {
+                    // if (eachEntry.readingId === true) {
+                        getReading(eachEntry.readingId).then(readingsThere => {
+                            console.log("what are the readings", readingsThere)
+                            setDisplayReading(readingsThere)
+                        })
+                        .then(eachIndividualReading =>{
+                            console.log("what is this", eachIndividualReading)
+                            
+                        })
+                    // }
                 })
             }
         })
@@ -32,26 +38,18 @@ const Timeline = () => {
 
     }, []);
 
-    // const findIfReading = (eachEntry) => {
-    //     if (eachEntry.readingId) {
-    //         getReading(eachEntry.readingId).then(readingInfo => {
-    //             console.log("reading info", readingInfo)
-    //             setDisplayReading(readingInfo)
-    //         })
-    //     }
-    // }
 
 
 
 
 
     const returnTimeline = currentFeed.map(entry => {
-    // if(entry.readingId){
-    //     getReading(entry.readingId).then(readingInfo=>{
-    //         setDisplayReading(readingInfo)
-    //     }) 
-    // }
-       
+        // if(entry.readingId){
+        //     getReading(entry.readingId).then(readingInfo=>{
+        //         setDisplayReading(readingInfo)
+        //     }) 
+        // }
+
 
         return (
             <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" key={entry._id}>
@@ -67,7 +65,7 @@ const Timeline = () => {
                         <button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Edit</button>
                         {(entry.readingId === displayReading._id) && (
                             <div>
-                                <img class=" bg-gray-200 text-blue-600 px-2 py-2 rounded-md mr-2"/>
+                                <img class=" bg-gray-200 text-blue-600 px-2 py-2 rounded-md mr-2" />
                                 <button class=" bg-blue-600 text-gray-200 px-2 py-2 rounded-md ">Publish</button>
                             </div>
                         )}
