@@ -1,15 +1,17 @@
 import { getCurrentUser } from './Profile'
 // import Reading from './Reading'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from './common/Button'
 
 const Entry = () => {
     const [entry, setEntry] = useState("")
+    // const [edit, setEdit] = useState(false)
     const [reading, setReading] = useState("")
     const [viewReading, setViewReading] = useState("")
     const [currentUser, setCurrentUser] = useState(undefined)
+    const router = useRouter()
 
     const {idx} = router.query
     
@@ -35,6 +37,7 @@ const Entry = () => {
         if(reading){
            const readingId = reading.id     
             makeEntry(currentUser.id, body, readingId)
+            generageReading(entry.id)
             // setEntry(entry)
         } else{
             console.log("we are doing this")
@@ -53,9 +56,7 @@ const Entry = () => {
         if(entry){
             generateReading(entry._id)
             setReading(reading)
-            router.push("/entry/entry")
             console.log(reading)
-            
         }
         
     }
@@ -128,7 +129,7 @@ const Entry = () => {
                                         <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src="https://ik.imagekit.io/q5edmtudmz/FB_IMG_15658659197157667_wOd8n5yFyXI.jpg" alt="bag" />
                                         <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg">
                                             <div class="flex items-center">
-                                                <h2 class="text-xl text-gray-800 font-medium mr-auto">Card Name</h2>
+                                                <h2 class="text-xl text-gray-800 font-medium mr-auto">{viewReading.secondCard.name}</h2>
                                                 <p class="text-gray-800 font-semibold tracking-tighter">
                                                     Present</p>
                                             </div>
@@ -144,7 +145,7 @@ const Entry = () => {
                                         <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src="https://ik.imagekit.io/q5edmtudmz/FB_IMG_15658659197157667_wOd8n5yFyXI.jpg" alt="bag" />
                                         <div class="w-full md:w-2/3 px-4 py-4 bg-white rounded-lg">
                                             <div class="flex items-center">
-                                                <h2 class="text-xl text-gray-800 font-medium mr-auto">Card Name</h2>
+                                                <h2 class="text-xl text-gray-800 font-medium mr-auto">{viewReading.thirdCard.name}</h2>
                                                 <p class="text-gray-800 font-semibold tracking-tighter">
                                                     Future</p>
                                             </div>
@@ -173,20 +174,6 @@ const Entry = () => {
 
 
 const API_URL = "http://localhost:8000/api/"
-
-//create a new reading
-export const makeEntry = (
-    creator,
-    body,
-    readingId
-) => {
-    return axios
-        .post(API_URL + 'entry/make', {
-            creator,
-            body,
-            readingId
-        })
-}
 
 
 //create a new reading

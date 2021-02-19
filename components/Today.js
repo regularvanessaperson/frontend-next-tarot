@@ -1,15 +1,17 @@
 import { getCurrentUser } from './Profile'
 // import Reading from './Reading'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Button from './common/Button'
 
 const Today = () => {
     const [entry, setEntry] = useState("")
+    const [entryId, setEntryId] = useState("")
     const [reading, setReading] = useState("")
     const [viewReading, setViewReading] = useState("")
     const [currentUser, setCurrentUser] = useState(undefined)
+    const router = useRouter()
 
     useEffect(() => {
         const thisUser = getCurrentUser()
@@ -20,9 +22,18 @@ const Today = () => {
         if (reading !== "") {
             sendReadingInfo()
         }
+        getTodaysEntry(thisUser.id).then((val)=>{
+            if (val) {
+                setEntryId(val.data._id)
+                setEntry(val.data.body)
+            }
+        })
     }, []);
 
-
+    const refreshData = () => {
+        router.replace(router.asPath);
+      }
+    
 
     const handleEntry = (e) => {
         console.log("we are handling this entry")
@@ -49,7 +60,7 @@ const Today = () => {
         if (entry) {
             generateReading(entry._id)
             setReading(reading)
-            router.push("/entry/entry/[idx]")
+            refreshData()
             console.log(reading)
 
         }
@@ -67,7 +78,7 @@ const Today = () => {
             <>
                 {currentUser && (
                     <div>
-                        <div class="heading text-center font-bold text-2xl m-5 text-gray-800">Date</div>
+                        <div class="heading text-center font-bold text-2xl m-5 text-gray-800">Welcome Back {currentUser.username}!</div>
                         <form onSubmit={handleEntry}>
                             <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
                                 <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
@@ -95,8 +106,7 @@ const Today = () => {
                                                 <p>3. The third card represents the outcome.</p>
                                             </div>
                                             <div class="grid   justify-center mt-5 top-auto">
-                                                <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" handleClick={createReading} />
-
+                                                <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" value={reading} handleClick={createReading} />
                                             </div>
                                         </div>
                                     </div>
@@ -166,8 +176,6 @@ const Today = () => {
 
 
 
-
-
 const API_URL = "http://localhost:8000/api/"
 
 //create a new reading
@@ -181,6 +189,18 @@ export const makeEntry = (
             creator,
             body,
             readingId
+        })
+}
+
+//get reading from current day
+export const getTodaysEntry = (
+    creator,
+) => {
+    return axios
+        .get(API_URL + 'entry/date/'+new Date().toISOString().split('T')[0]+'/creator/'+creator)
+        .catch((error) => {
+
+            return null
         })
 }
 
@@ -199,10 +219,14 @@ export const generateReading = (
         })
 }
 
+
+
 export const getReading = (
     idx
 ) => {
     return axios.get(API_URL + 'reading' + idx)
 }
+
+
 
 export default Today
