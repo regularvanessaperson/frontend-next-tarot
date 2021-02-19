@@ -102,7 +102,7 @@ const UserProfile = ({userData}) => {
 export const userProfile = (
     idx
 ) => {
-    return axios.get(API_URL + 'user/profile/' + idx , { withCredentials: true })
+    return axios.get(API_URL + '/user/profile/' + idx , { withCredentials: true })
 }
 
 //get current user
