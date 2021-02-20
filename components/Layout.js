@@ -22,10 +22,9 @@ const Layout = (props) => {
   }, []);
 
   const logOut = () => {
-    
     logout()
     setCurrentUser(undefined)
-    // router.push("/")
+    window.location.replace("/")
   }
 
 
