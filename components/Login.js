@@ -64,7 +64,8 @@ const Login = (props) => {
             login(username, password).then(
                 (data) => {
                     setLoading(true)
-                    router.push('/entry/makeEntry')
+                    window.location.replace("/")
+                    // router.push('/entry/makeEntry')
                 },
                 (error) => {
                     //Setting loading to false and return the error
