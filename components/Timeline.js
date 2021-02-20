@@ -1,5 +1,6 @@
 import { getCurrentUser } from './Profile'
 import { useEffect, useState } from 'react'
+import Button from './common/Button'
 import axios from 'axios'
 
 
@@ -22,13 +23,13 @@ const Timeline = () => {
             if (entryArray.filter(entry => entry.readingId === true)) {
                 entryArray.map(eachEntry => {
                     // if (eachEntry.readingId === true) {
-                        getReading(eachEntry.readingId).then(readingsThere => {
-                            console.log("what are the readings", readingsThere)
-                            setDisplayReading(readingsThere)
-                        })
-                        .then(eachIndividualReading =>{
+                    getReading(eachEntry.readingId).then(readingsThere => {
+                        console.log("what are the readings", readingsThere)
+                        setDisplayReading(readingsThere)
+                    })
+                        .then(eachIndividualReading => {
                             console.log("what is this", eachIndividualReading)
-                            
+
                         })
                     // }
                 })
@@ -62,7 +63,11 @@ const Timeline = () => {
                     </p>
                     <div class="flex items-center justify-end mt-4 top-auto">
                         <button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Favorite</button>
-                        <button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Edit</button>
+                        <Button class="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline"
+                            handleClick={() => router.push({
+                                pathname: `/entry/entry/[idx]`,
+                                query: { idx: entry._id }
+                            })}/>
                         {(entry.readingId === displayReading._id) && (
                             <div>
                                 <img class=" bg-gray-200 text-blue-600 px-2 py-2 rounded-md mr-2" />
