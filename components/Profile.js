@@ -7,7 +7,6 @@ const Profile = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
 
     useEffect(() => {
-        console.log(window.localStorage)
         // grab getCurrentuser from the auth service
         const thisUser = getCurrentUser();
 

@@ -80,8 +80,8 @@ const Login = (props) => {
     }
 
     return (
-        <div className="col-md-12">
-            <div className="card card-container">
+        <div className="self-center">
+            <div className="card card-container justify-self-auto">
 
                 <Form onSubmit={handleLogin} ref={form}>
                     <FormGroup text="username">
@@ -133,7 +133,6 @@ export const login = (username, password) => {
     .then((response)=> {
         //Check if the response of user has accessToken
         if(response.data.accessToken){
-            console.log("is there a token",response.data.accessToken)
             setItem('user', response.data)
         }
         return response.data

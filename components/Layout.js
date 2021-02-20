@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link'
-import authHeader from '../utilities/authHeader.utilities'
 import { getItem, removeItem } from '../utilities/localStorage.utilities'
 import { useRouter } from "next/router";
 
@@ -12,32 +11,23 @@ const Layout = (props) => {
   const router = useRouter()
 
   useEffect(() => {
-    
-    // console.log(window.localStorage)
-    console.log(currentUser)
+
     // grab getCurrentuser from the auth service
     const user = getCurrentUser();
     if (user) {
       // Set current user to the currentUser state
       setCurrentUser(user);
-      // // Check if the user.roles has "ROLE_ADMIN" return either true or false
-      // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+   
     }
   }, []);
 
   const logOut = () => {
-    setCurrentUser(undefined)
+    
     logout()
-    router.push("/")
+    setCurrentUser(undefined)
+    // router.push("/")
   }
 
-
-  let profUrl = null
-
-  // if (currentUser) {
-  //   // console.log('/userProfile/' + userProfile.id)
-  //   profUrl = '/user/userProfile/' + currentUser.id
-  // }
 
   return (
 
@@ -78,7 +68,7 @@ const Layout = (props) => {
               </Link>
             </li>
             <li>
-              <Link href={"/user/userProfile/"+currentUser.id} to="/user/userProfile/[idx]">
+              <Link href={"/user/userProfile/" + currentUser.id} to="/user/userProfile/[idx]">
                 <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
                   <span className="text-gray-600">
                   </span>
@@ -108,42 +98,42 @@ const Layout = (props) => {
 
     ) : (
         <div>
-        <div className="flex flex-wrap bg-gray-100 w-full h-screen" >
-        <div className="w-3/12 bg-white rounded p-3 shadow-lg">
-          <div className="flex items-center space-x-4 p-2 mb-5">
-            <Link href="/" to={"/"}>
-              <h4>Tarot Journal</h4>
-            </Link>
-          </div>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="/auth/login" to={"/auth/login"} >
-                <a href="" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
-                  <span className=" text-gray-600">
-                  </span>
-                  <span>Login</span>
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/auth/register" to={'/auth/register'}>
-                <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
-                  <span className="text-gray-600">
-                  </span>
-                  <span>Signup</span>
-                </a>
-              </Link>
-            </li>
-          </ul>
-          </div>
-          <div className="w-9/12 bg-gradient-to-tr from-green-400 to-blue-500">
-          <div className="p-4 text-gray-500">
-            {props.children}
-          </div>
-        </div>
-      </div >
+          <div className="flex flex-wrap bg-gray-100 w-full h-screen" >
+            <div className="w-3/12 bg-white rounded p-3 shadow-lg">
+              <div className="flex items-center space-x-4 p-2 mb-5">
+                <Link href="/" to={"/"}>
+                  <h4>Tarot Journal</h4>
+                </Link>
+              </div>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="/auth/login" to={"/auth/login"} >
+                    <a href="" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
+                      <span className=" text-gray-600">
+                      </span>
+                      <span>Login</span>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/auth/register" to={'/auth/register'}>
+                    <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
+                      <span className="text-gray-600">
+                      </span>
+                      <span>Signup</span>
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="w-9/12 bg-gradient-to-tr from-green-400 to-blue-500">
+              <div className="p-4 text-gray-500">
+                {props.children}
+              </div>
+            </div>
+          </div >
 
-        
+
         </div>
       )}
     </div>
@@ -161,11 +151,7 @@ export const getCurrentUser = () => {
   return getItem('user')
 }
 
-// //access Admins content
-// export const getAdminBoard = () => {
-//   const API_URL = "http://localhost:8000/api/"//get user profile
-//   return axios.get(API_URL + 'test/admin', { header: authHeader() })
-// }
+
 
 export const userProfile = (
   idx
