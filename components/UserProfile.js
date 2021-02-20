@@ -49,12 +49,9 @@ const UserProfile = () => {
                 if (entry.favorite === true) {
                     return entry
                 }
-
             })
             setCurrentFeed(favoriteArray)
-
         })
-
     }, []);
 
     const goEdit = (value) => {
