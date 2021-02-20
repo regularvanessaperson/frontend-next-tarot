@@ -9,20 +9,17 @@ const EditEntry = () => {
     const [entry, setEntry] = useState("")
     const [entryId, setEntryId] = useState("")
     const [reading, setReading] = useState("")
-    const [viewReading, setViewReading] = useState("")
     const [currentUser, setCurrentUser] = useState(undefined)
     const router = useRouter()
-
+    const [disabledForm, setDisabledForm] = useState(true)
     useEffect(() => {
+        const newIdx = window.location.href.split('/').pop();
         const thisUser = getCurrentUser()
         if (thisUser) {
             // Set current user to the currentUser state
             setCurrentUser(thisUser);
         }
-        if (reading !== "") {
-            sendReadingInfo()
-        }
-        getTodaysEntry(thisUser.id).then((value)=>{
+        getEntry(newIdx).then((value)=>{
             if (value) {
                 setEntryId(value.data._id)
                 setEntry(value.data.body)
@@ -31,67 +28,66 @@ const EditEntry = () => {
         })
     }, []);
 
-    // const goToEntry = () => {
-    //     router.push("/entry/entry/[idx]");
-    //   }
-    
 
     const handleEntry = (e) => {
-        e.preventDefault()
-        console.log("we are handling this entry")
         const body = entry
-        if (reading) {
-            const readingId = reading.id
-            makeEntry(currentUser.id, body, readingId)
-            // setEntry(entry)
-        } else {
-            console.log("we are doing this")
-            makeEntry(currentUser.id, body)
-            // setEntry(entry)
-        }
-
-
+        updateEntry(entryId,body)
     }
     const onMakeEntry = (e) => {
         const entryText = e.target.value
         setEntry(entryText)
-        // router.push("/entry/entry/[idx]");
-        console.log(entry)
     }
 
     const handleReading = (e) => {
         // e.preventDefault()
         if (entry) {
-            generateReading(entryId)
-            setReading(reading)
-            router.push('/entry/today')
-            console.log(reading)
-
+            generateReading(entryId).then((response) =>{
+                setReading(response.data)
+                router.replace("/entry/entry/"+entryId)
+            })
         }
 
     }
 
-    // const sendReadingInfo = () => {
-    //     getReading(entry._id).then(currentReading => {
-    //         setViewReading(currentReading)
-    //     })
-    // }
+    const enableEditing = () => {
+        setDisabledForm(false)
+        router.replace("/entry/entry/"+entryId)
+    }
 
     return (
         <div>
             <>
                 {currentUser && (
                     <div>
-                        <div class="heading text-center font-bold text-2xl m-5 text-gray-800"> {currentUser.username} can view and choose to edit their entry here</div>
-                        <form onSubmit={handleEntry}>
-                            <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+                        <div class="heading text-center font-bold text-2xl m-5 text-gray-800">Welcome Back {currentUser.username}!</div>
+                                                    
+                            
+                                {disabledForm && (
+                                <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+                                <fieldset disabled="disabled">
+                                <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none w-full" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
+                                </fieldset>
+                                <div class="buttons flex">
+                                    {/* <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit">Save</button> */}
+                                    <Button handleClick={enableEditing} label="Edit Entry" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit"/>
+                                </div>            
+                                        </div>
+                                    )
+                                }
+                                 {!disabledForm && (
+                                     <form onSubmit={handleEntry}>
+                                        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
                                 <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
                                 <div class="buttons flex">
                                     {/* <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit">Save</button> */}
-                                    <Button label="Save" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit" />
-                                </div>
-                            </div>
-                        </form>
+                                    <Button label="Update" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" handleClick={handleEntry} />
+                                </div>            
+                                        </div>
+                                        </form>
+                                    )
+                                }
+                            
+                        
                         <div>
                             <div>
                                 <div>
@@ -110,7 +106,7 @@ const EditEntry = () => {
                                                 <p>3. The third card represents the outcome.</p>
                                             </div>
                                             <div class="grid   justify-center mt-5 top-auto">
-                                                <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} />
+                                                <Button disableCondition={reading} label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} />
                                             </div>
                                         </div>
                                     </div>
@@ -187,25 +183,23 @@ const EditEntry = () => {
 const API_URL = "http://localhost:8000/api/"
 
 //create a new reading
-export const makeEntry = (
-    creator,
-    body,
-    readingId
+export const updateEntry = (
+    _id,
+    body
 ) => {
     return axios
-        .post(API_URL + 'entry/make', {
-            creator,
-            body,
-            readingId
+        .put(API_URL + 'entry/edit', {
+            _id,
+            body
         })
 }
 
 //get reading from current day
-export const getTodaysEntry = (
-    creator,
+export const getEntry = (
+    id,
 ) => {
     return axios
-        .get(API_URL + 'entry/date/'+new Date().toISOString().split('T')[0]+'/creator/'+creator)
+        .get(API_URL + 'entry/'+id)
         .catch((error) => {
 
             return null
@@ -230,7 +224,5 @@ export const getReading = (
 ) => {
     return axios.get(API_URL + 'reading' + idx)
 }
-
-
 
 export default EditEntry

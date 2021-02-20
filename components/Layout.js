@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Link from 'next/link'
 import authHeader from '../utilities/authHeader.utilities'
 import { getItem, removeItem } from '../utilities/localStorage.utilities'
+import { useRouter } from "next/router";
 
 
 
 const Layout = (props) => {
   // const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
-
+  const router = useRouter()
 
   useEffect(() => {
     
@@ -28,6 +29,7 @@ const Layout = (props) => {
   const logOut = () => {
     setCurrentUser(undefined)
     logout()
+    router.push("/")
   }
 
 
