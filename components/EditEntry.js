@@ -5,7 +5,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Button from './common/Button'
 
-const Today = () => {
+const EditEntry = () => {
     const [entry, setEntry] = useState("")
     const [entryId, setEntryId] = useState("")
     const [reading, setReading] = useState("")
@@ -62,12 +62,10 @@ const Today = () => {
     const handleReading = (e) => {
         // e.preventDefault()
         if (entry) {
-            generateReading(entryId).then((reading) => {
-                setReading(reading.data)
-                router.replace('/entry/today')
-                console.log(reading)
-            })
-            
+            generateReading(entryId)
+            setReading(reading)
+            router.push('/entry/today')
+            console.log(reading)
 
         }
 
@@ -84,7 +82,7 @@ const Today = () => {
             <>
                 {currentUser && (
                     <div>
-                        <div class="heading text-center font-bold text-2xl m-5 text-gray-800">Welcome Back {currentUser.username}!</div>
+                        <div class="heading text-center font-bold text-2xl m-5 text-gray-800"> {currentUser.username} can view and choose to edit their entry here</div>
                         <form onSubmit={handleEntry}>
                             <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
                                 <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
@@ -235,4 +233,4 @@ export const getReading = (
 
 
 
-export default Today
+export default EditEntry

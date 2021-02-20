@@ -1,10 +1,10 @@
-import Entry from '../../../components/Entry'
+import EditEntry from '../../../components/EditEntry'
 // import Reading from '../../components/Reading'
 
 const entry = () =>{
     return (
      <div> 
-    <Entry />
+    <EditEntry />
     {/* <Reading /> */}
     </div>  
     )
