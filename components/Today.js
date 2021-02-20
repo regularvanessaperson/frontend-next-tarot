@@ -55,17 +55,19 @@ const Today = () => {
     const onMakeEntry = (e) => {
         const entryText = e.target.value
         setEntry(entryText)
-        router.push("/entry/entry/[idx]");
+        // router.push("/entry/entry/[idx]");
         console.log(entry)
     }
 
     const handleReading = (e) => {
         // e.preventDefault()
         if (entry) {
-            generateReading(entryId)
-            setReading(reading)
-            router.push('/entry/today')
-            console.log(reading)
+            generateReading(entryId).then((reading) => {
+                setReading(reading.data)
+                router.replace('/entry/today')
+                console.log(reading)
+            })
+            
 
         }
 
