@@ -13,7 +13,8 @@ const Button = (props) => {
     return (
         <button
         className = {props.className}
-        onClick={props.handleClick}>{passingProps}</button>
+        onClick={props.handleClick} 
+        disabled = {props.disableCondition}>{passingProps}</button>
     )
 }
 
