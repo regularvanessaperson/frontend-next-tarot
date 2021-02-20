@@ -27,20 +27,18 @@ const Calendar = () => {
         getMonthsEntry(thisUser.id, new Date().toISOString().split('T')[0]).then(value => {
 
             if (value) {
-                console.log(value)
+                //returns value for month
                 let modifiers = {}
                 let theDates = []
                 let theDateLinks = {}
                 value.data.forEach(data => {
-                    console.log('data for calendar', data)
+                    //returns data for calendar
                     const id = data._id
                     const entryDate = new Date(data.date)
                     theDates.push(entryDate)
                     theDateLinks[entryDate.toISOString().split('T')[0]] = id
                 })
                 modifiers['journalDay'] = theDates[1]
-                console.log(theDates)
-                console.log(theDateLinks)
                 setDates(theDates)
                 setDateLinks(theDateLinks)
             }
@@ -64,7 +62,7 @@ const Calendar = () => {
             width: 60,
             position: 'relative'
         }
-        console.log(links)
+        //links to the day
         return (
             <div style={cellStyle}>
                 <div style={dateStyle}>{date}</div>
@@ -85,7 +83,7 @@ const Calendar = () => {
             <>
                 {currentUser && (
                     <div>
-                        <div class='heading text-center font-bold text-2x1 m-5 text-gray-800 h-page'>Calendar</div>
+                        <div className='heading text-center font-bold text-2x1 m-5 text-gray-800 h-page'>Calendar</div>
                         {dates && (
                             <div>
                                 <div>
