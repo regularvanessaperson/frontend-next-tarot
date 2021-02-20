@@ -10,7 +10,7 @@ const Timeline = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [currentFeed, setCurrentFeed] = useState([])
     const [displayReading, setDisplayReading] = useState({})
-    const [newState, setNewState]= useState(false)
+    const [newState, setNewState]= useState(true)
     const router = useRouter()
 
     useEffect(() => {
@@ -38,12 +38,17 @@ const Timeline = () => {
         // value.preventDefault()
         favorite(value)
         console.log("what's the value", value)
-        // setNewState(false)
-        router.replace('/entry/timeline')
+        setNewState(false)
+        router.push('/entry/timeline')
     }
 
 
-
+    const handleDelete = (value) => {
+        deleteEntry(value).then(()=> {
+            router.push("/entry/timeline")
+        })
+    }
+    
 
 
 
@@ -54,8 +59,8 @@ const returnTimeline = currentFeed.map(entry => {
     return (
         <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" key={entry._id}>
             <div class="w-full md:w-3/3 px-4 py-4 bg-white rounded-lg">
-                <div class="flex items-center">
-                    <h2 class="text-xl text-gray-800 font-medium mr-auto">{entry.date}</h2>
+                <div class="flex items-center space-between">
+                    <h2 class="text-xl text-gray-800 font-medium mr-auto">{new Date(entry.date).toDateString()}</h2>
                     {(entry.readingId) && (
                         <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
                             <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.firstCard.image} alt="bag" />
@@ -70,7 +75,7 @@ const returnTimeline = currentFeed.map(entry => {
                 <div class="flex items-center justify-end mt-4 top-auto">
                     <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" key={entry._id} label={(entry.favorite === true) ? 'Unfavorite': 'Favorite'} handleClick={()=> makeFavorite(entry._id )}/>
                     <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Edit' handleClick={()=> goEdit(entry._id)} />
-                    <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Delete' />
+                    <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Delete' handleClick={()=> handleDelete(entry._id)} />
                 </div>
             </div>
         </div>
@@ -82,7 +87,7 @@ return (
     <div>
         <div>
             <div>
-                <h1 class="text-center text-2xl font-bold p-4 bg-gray-800 text-gray-400">Generate Daily Reading</h1>
+                <h1 class="text-center text-2xl font-bold p-4 bg-gray-800 text-gray-400">Journal Entry History</h1>
                 {returnTimeline}
             </div>
         </div>
@@ -102,11 +107,23 @@ export const feed = (
     })
 }
 
+
 export const favorite = (
     _id
 ) => {
     return axios.put(API_URL+"entry/favorite", {
         _id
+    })
+}
+
+//delete an entry
+export const deleteEntry = (
+    _id
+) => {
+    console.log("this should be the id for axios", _id)
+    return axios
+    .delete(API_URL+"entry/delete", {
+        data: {_id: _id}
     })
 }
 
