@@ -133,7 +133,6 @@ export const login = (username, password) => {
     .then((response)=> {
         //Check if the response of user has accessToken
         if(response.data.accessToken){
-            console.log("is there a token",response.data.accessToken)
             setItem('user', response.data)
         }
         return response.data
