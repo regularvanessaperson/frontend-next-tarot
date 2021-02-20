@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
+import Layout from './Layout'
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import axios from 'axios';
@@ -55,14 +56,15 @@ const Login = (props) => {
         e.preventDefault()
 
         setMessage("")
-        setLoading(true)
+        
         //validates all the fields
         form.current.validateAll()
         //validator stores errors and we can check if errors exist
         if (checkBtn.current.context._errors.length === 0) {
             login(username, password).then(
-                () => {
-                    router.push('/')
+                (data) => {
+                    setLoading(true)
+                    router.push('/entry/makeEntry')
                 },
                 (error) => {
                     //Setting loading to false and return the error

@@ -2,9 +2,10 @@ import React from 'react'
 
 const Button = (props) => {
     let passingProps = props.label 
+    let disabled = props.disableCondition
+    let className = props.className
     
-    // if(passingProps === 'Edit'){
-    //     passingProps = <i className="fas fa-edit"></i> 
+    
     // }else if(passingProps === 'Delete'){
     //     passingProps = <i className="fas fa-trash"></i>
     // }

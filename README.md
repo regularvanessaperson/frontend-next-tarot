@@ -12,23 +12,77 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+# Approach/Methodology
+This app was created as a personal journal app that allows the user to pull a three card reading for reflection. On the backend to generate a reading of random cardsI used an API (https://rws-cards-api.herokuapp.com/api/v1/cards/random?n=3). The user can easily make, edit, favorite and delete any entry as well as make an entry without a reading.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+In terms of building the app, the frontend is very simple and easy to follow 
 
-## Learn More
+# Landing page after user logs in
+![Home](images/HomePage.png)
 
-To learn more about Next.js, take a look at the following resources:
+# Link to Deployed App
+Link to come
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Link to Backend Repo
+[Here](https://github.com/SFX818/Team-7-backend) is a link to our backend repo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Wireframes
+![Wireframes](images/Wireframe_Board.png)
 
-## Deploy on Vercel
+# User Stories
+| As a user, I want to be able to...|
+|-|
+|Write a post that is visible to other users|
+|Categorize my post using hashtags|
+|Follow and unfollow other users |
+|Favorite posts|
+|Retweet posts|
+|Reply to posts|
+|View a feed of all posts|
+|View a feed of posts from users I follow|
+|View other user profiles|
+|View my favorited posts|
+|Search for topics (hashtags)|
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Frontend Tech Stack
+## Fetching Data
+- Axios: allows us to make calls to send data to and retrieve data from our backend. We are also investigating integrating a Twitter API into our app.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Architecture
+- React: building our fronted with the React library allows us to break our app down into reusable components, and helps us create a more user friendly experience because we are able to re-render only components whose state has changed without re-rendering other components.
+
+```
+App
+|
+|--Home
+|  |--Post(s)
+|  |   |--Replies
+|  |
+|  |--Searchbar
+|  |
+|  |--PostForm
+|
+|--Following
+|  |--Post(s)
+|
+|--Favorites
+|  |--Post(s)
+|
+|--UserProfile
+|  |--Post(s)
+      |--Following
+
+```
+
+## Styling
+- Bootstrap
+
+# Installation Instructions
+- Fork & clone this repo
+- cd into local directory and `npm install` to install dependencies
+
+# Problems/Challenges
+- We ran into an issue rendering posts for users a user follows because our data from the backend initially required iterating through a nested array. This resulted in posts displaying from a single user but broke when a user followed multiple users. This was ultimately resolved by reconfiguring a route on the backend and made our code more efficient because it cut out the need for an extra API call and subsequent nested array that came with it.
+- Since we did reuse our post component in every page that rendered current and other user's code there was a difference in how every object came through from the backend depending on how we set it up. At first we had to make promises to access the information we needed but ended up populating much of the backend so we could use in the frontend easily.
+
