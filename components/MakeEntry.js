@@ -5,13 +5,14 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Button from './common/Button'
 
-const Entry = () => {
+const MakeEntry = () => {
     const [entry, setEntry] = useState("")
     const [entryId, setEntryId] = useState("")
     const [reading, setReading] = useState("")
     const [viewReading, setViewReading] = useState("")
     const [currentUser, setCurrentUser] = useState(undefined)
     const router = useRouter()
+    
 
     useEffect(() => {
         const thisUser = getCurrentUser()
@@ -38,44 +39,47 @@ const Entry = () => {
 
     const handleEntry = (e) => {
         e.preventDefault()
-        console.log("we are handling this entry")
+        console.log("we are handling this entry", entry)
         const body = entry
         if (reading) {
             const readingId = reading.id
-            makeEntry(currentUser.id, body, readingId)
-            // setEntry(entry)
+            makeEntry(currentUser.id, body, readingId).then(newEntry=>{
+                router.push({
+                    pathname: `/entry/entry/[idx]`,
+                    query: {idx: newEntry.data._id}
+                })
+            })
         } else {
-            console.log("we are doing this")
-            makeEntry(currentUser.id, body)
-            // setEntry(entry)
+            makeEntry(currentUser.id, body).then(newEntry=>{
+                console.log("we are doing this", newEntry)
+                router.push({
+                    pathname: `/entry/entry/[idx]`,
+                    query: {idx: newEntry.data._id}
+                })
+            })
         }
 
 
     }
+
     const onMakeEntry = (e) => {
         const entryText = e.target.value
         setEntry(entryText)
-        // router.push("/entry/entry/[idx]");
-        console.log(entry)
     }
 
     const handleReading = (e) => {
         // e.preventDefault()
         if (entry) {
-            generateReading(entryId)
-            setReading(reading)
-            router.push('/entry/today')
-            console.log(reading)
+            generateReading(entryId).then((reading) => {
+                setReading(reading.data)
+                router.replace('/entry/today')
+                console.log(reading)
+            })
+            
 
         }
 
     }
-
-    // const sendReadingInfo = () => {
-    //     getReading(entry._id).then(currentReading => {
-    //         setViewReading(currentReading)
-    //     })
-    // }
 
     return (
         <div>
@@ -88,7 +92,7 @@ const Entry = () => {
                                 <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
                                 <div class="buttons flex">
                                     {/* <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit">Save</button> */}
-                                    <Button label="Save" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit" />
+                                    <Button label="Save" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit"  />
                                 </div>
                             </div>
                         </form>
@@ -233,4 +237,4 @@ export const getReading = (
 
 
 
-export default Entry
+export default MakeEntry

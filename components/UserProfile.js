@@ -9,7 +9,7 @@ import Cors from 'cors'
 const API_URL="http://localhost:8000/api"
 
 
-const UserProfile = ({userData}) => {
+const UserProfile = () => {
   
     const [currentUser, setCurrentUser] = useState(undefined);
     const [profile, setProfile] = useState([])
