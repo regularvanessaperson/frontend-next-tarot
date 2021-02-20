@@ -63,7 +63,6 @@ const Login = (props) => {
             login(username, password).then(
                 () => {
                     router.push('/')
-                    window.location.reload()
                 },
                 (error) => {
                     //Setting loading to false and return the error
