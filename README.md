@@ -60,6 +60,7 @@ Frontend:
 
 ## Styling
 - tailwindcss
+- react-day-picker [https://react-day-picker.js.org/]
 
 # Installation Instructions
 - Fork & clone this repo

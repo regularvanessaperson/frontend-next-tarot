@@ -18,7 +18,6 @@ const UserProfile = () => {
     const [id, setId] = useState('')
 
     const router = useRouter()
-    // console.log(router.query);
     const { idx } = router.query
 
     useEffect(() => {
@@ -26,7 +25,6 @@ const UserProfile = () => {
         if (!newIdx) {
             return
         }
-        console.log(newIdx)
         if (newIdx) {
             setId(idx)
         }
@@ -36,9 +34,7 @@ const UserProfile = () => {
             setCurrentUser(thisUser);
         }
         userProfile(newIdx).then((response) => {
-            console.log(response)
             const userInfo = response.data
-            // console.log("Ids: ", userInfo._id, currentUser.id)
             if (thisUser && userInfo._id === thisUser.id) {
                 setCurrent(true)
             }
@@ -47,8 +43,16 @@ const UserProfile = () => {
         })
         feed(thisUser.id).then(data => {
             let entryArray = data.data.entries
-            console.log("what is here", entryArray)
-            setCurrentFeed(entryArray)
+            let favoriteArray = []
+
+            favoriteArray = entryArray.map((entry) => {
+                if (entry.favorite === true) {
+                    return entry
+                }
+
+            })
+            setCurrentFeed(favoriteArray)
+
         })
 
     }, []);
@@ -63,7 +67,6 @@ const UserProfile = () => {
     const makeFavorite = (value) => {
         // value.preventDefault()
         favorite(value)
-        console.log("what's the value", value)
         setCurrent(true)
         router.push('/entry/timeline')
     }
@@ -76,69 +79,71 @@ const UserProfile = () => {
     }
 
 
-    function getUserProfile(userInfo) {
-        return (
-            <div className="container">
-
-                <div className="card">
-                    <div>
-                        <h2 className="center-top nav-link">
-                            <strong>User Information</strong>
-                        </h2>
-                        <h3>
-                            <strong className="nav-link">{userInfo.username}</strong>
-                        </h3>
+    const favoritesFeedShow = currentFeed.map((entry, index) => {
+        if (entry !== undefined) {
+            return (
+                <div className="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" key={entry._id}>
+                    <div className="w-full md:w-3/3 px-4 py-4 bg-white rounded-lg">
+                        <div className="flex items-center space-between">
+                            <h2 className="text-xl text-gray-800 font-medium mr-auto">{new Date(entry.date).toDateString()}</h2>
+                            {(entry.readingId) && (
+                                <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+                                    <img className="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.firstCard.image} alt="bag" />
+                                    <img className="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.secondCard.image} alt="bag" />
+                                    <img className="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.thirdCard.image} alt="bag" />
+                                </div>
+                            )}
+                        </div>
+                        <p className="text-sm text-gray-700 mt-1">
+                            {entry.body}
+                        </p>
+                        <div className="flex items-center justify-end mt-4 top-auto">
+                            <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" key={entry._id} label={(entry.favorite === true) ? 'Unfavorite' : 'Favorite'} handleClick={() => makeFavorite(entry._id)} />
+                            <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Edit' handleClick={() => goEdit(entry._id)} />
+                            <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Delete' handleClick={() => handleDelete(entry._id)} />
+                        </div>
                     </div>
-                    <div>
-                        <h2>Favorite Posts </h2>
+                </div>)
+        }
+
+
+    })
+
+
+
+
+    const getUserProfile = (userInfo) => {
+        return (
+            <div >
+
+                <div >
+                    <div className="text-center ">
+                        <h1 className="text-center text-2xl center-top nav-link">
+                            <strong>User Information</strong>
+                        </h1>
+                        <h2>
+                            <strong className="text-center text-1xl center-top">Username: {userInfo.username}</strong>
+                        </h2>
                     </div>
                 </div>
                 <div className="card">
                     <h4 className="nav-link">
-                        <strong>Favorites</strong>
+                        <h1 className="text-center text-2xl font-bold p-4 bg-gray-800 text-gray-400">Favorites</h1>
                     </h4>
-                    {currentFeed.map((favorite, index) => {
-                        if (favorite.favorite === true) {
-                            return (
-                                <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" key={entry._id}>
-                                    <div class="w-full md:w-3/3 px-4 py-4 bg-white rounded-lg">
-                                        <div class="flex items-center space-between">
-                                            <h2 class="text-xl text-gray-800 font-medium mr-auto">{new Date(entry.date).toDateString()}</h2>
-                                            {(entry.readingId) && (
-                                                <div className="holder mx-auto w-10/12 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
-                                                    <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.firstCard.image} alt="bag" />
-                                                    <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.secondCard.image} alt="bag" />
-                                                    <img class="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6 tracking-tighter" src={entry.readingId.thirdCard.image} alt="bag" />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <p class="text-sm text-gray-700 mt-1">
-                                            {entry.body}
-                                        </p>
-                                        <div class="flex items-center justify-end mt-4 top-auto">
-                                            <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" key={entry._id} label={(entry.favorite === true) ? 'Unfavorite' : 'Favorite'} handleClick={() => makeFavorite(entry._id)} />
-                                            <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Edit' handleClick={() => goEdit(entry._id)} />
-                                            <Button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline" label='Delete' handleClick={() => handleDelete(entry._id)} />
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    })}
                 </div>
                 {/* Links to followed, follows, favorites */}
             </div>
         )
     }
 
-    return <div>
+    return (
         <div>
-            {profile}
+            <div>
+                {profile}
+                {favoritesFeedShow}
+            </div>
         </div>
-
-
-
-    </div>
+    )
 }
 
 
@@ -178,7 +183,6 @@ export const favorite = (
 export const deleteEntry = (
     _id
 ) => {
-    console.log("this should be the id for axios", _id)
     return axios
         .delete(API_URL + "/entry/delete", {
             data: { _id: _id }

@@ -14,14 +14,14 @@ export default function Home() {
     
     
       <main className={styles.main}>
-        <div class="max-w-6xl mx-auto px-5 py-24 ">
-        <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-          <h1  className={styles.title} class=" title-font mb-2 text-4xl font-extrabold leading-10 tracking-tight text-left sm:text-5xl sm:leading-none md:text-6xl"> Welcome to Tarot Journal ✨</h1>
-          <p class="lg:w-1/2 w-full leading-relaxed text-base">
+        <div className="max-w-6xl mx-auto px-5 py-24 ">
+        <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+          <h1  className={styles.title} className=" title-font mb-2 text-4xl font-extrabold leading-10 tracking-tight text-left sm:text-5xl sm:leading-none md:text-6xl"> Welcome to Tarot Journal ✨</h1>
+          <p className="lg:w-1/2 w-full leading-relaxed text-base">
             Keep track of your thoughts and ask any question you want to generate a reading for🔮.
           </p>
         </div>
-        <div class="flex flex-wrap -m-4">
+        <div className="flex flex-wrap -m-4">
         </div>
       </div>
   
