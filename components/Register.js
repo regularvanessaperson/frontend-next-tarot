@@ -113,8 +113,7 @@ const Register = () => {
                     //if successful, login the new user and redirect to home page
                     login(username, password).then(
                         () => {
-                            router.push("/user/userProfile/[id]")
-                            window.location.reload()
+                            router.push("/")
                         }
                     )
                 },
