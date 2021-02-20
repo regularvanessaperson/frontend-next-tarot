@@ -50,11 +50,11 @@ const Layout = (props) => {
           </div>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/entry/today" to={"/entry/today"}>
+              <Link href="/entry/makeEntry" to={"/entry/makeEntry"}>
                 <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
                   <span className="text-gray-600">
                   </span>
-                  <span>Today</span>
+                  <span>Make New Entry</span>
                 </a>
               </Link>
             </li>
@@ -81,7 +81,7 @@ const Layout = (props) => {
                 <a href="#" className="flex items-center space-x-3 text-gray-700 p-2 rounded-md font-medium hover:bg-gray-200 focus:bg-gray-200 focus:shadow-outline">
                   <span className="text-gray-600">
                   </span>
-                  <span>{currentUser.username} profile</span>
+                  <span>{currentUser.username} Profile</span>
                 </a>
               </Link>
             </li>
