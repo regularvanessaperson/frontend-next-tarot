@@ -23,18 +23,14 @@ const MakeEntry = () => {
         if (reading !== "") {
             sendReadingInfo()
         }
-        getTodaysEntry(thisUser.id).then((value)=>{
-            if (value) {
-                setEntryId(value.data._id)
-                setEntry(value.data.body)
-                setReading(value.data.readingId)
-            }
-        })
+        // getTodaysEntry(thisUser.id).then((value)=>{
+        //     if (value) {
+        //         setEntryId(value.data._id)
+        //         setEntry(value.data.body)
+        //         setReading(value.data.readingId)
+        //     }
+        // })
     }, []);
-
-    // const goToEntry = () => {
-    //     router.push("/entry/entry/[idx]");
-    //   }
     
 
     const handleEntry = (e) => {
@@ -99,13 +95,11 @@ const MakeEntry = () => {
                         <div>
                             <div>
                                 <div>
-                                    <h1 class="text-center text-2xl font-bold p-4 bg-gray-800 text-gray-400">Generate Daily Reading</h1>
+                                    <h1 class="text-center text-2xl font-bold p-4 bg-gray-800 text-gray-400">Save an entry to pull a reading!</h1>
                                     <div class="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" >
                                         <div class="w-full md:w-3/3 px-4 py-4 bg-white rounded-lg">
                                             <div class="flex items-center">
                                                 <h2 class="text-xl text-gray-800 font-medium mr-auto">Three Card Spread</h2>
-                                                <p class="text-gray-800 font-semibold tracking-tighter">
-                                                    top right corner</p>
                                             </div>
                                             <div class="text-sm text-gray-700 mt-1">
                                                 The three card spread will be generated below. You can ask a question for the day or simply read and write about your interpretation.
@@ -114,7 +108,8 @@ const MakeEntry = () => {
                                                 <p>3. The third card represents the outcome.</p>
                                             </div>
                                             <div class="grid   justify-center mt-5 top-auto">
-                                                <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} />
+                                            <Button disableCondition={reading} label="Save your question above and pull your reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} />
+                                                {/* <Button label="Generate Reading" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} /> */}
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +169,7 @@ const MakeEntry = () => {
                                         </div >
                                     </div>
                                 ): (
-                                    <div>No reading yet</div>
+                                    <div class="self-center"></div>
                                 )} 
                             </div>
                         </div>
@@ -204,17 +199,17 @@ export const makeEntry = (
         })
 }
 
-//get reading from current day
-export const getTodaysEntry = (
-    creator,
-) => {
-    return axios
-        .get(API_URL + 'entry/date/'+new Date().toISOString().split('T')[0]+'/creator/'+creator)
-        .catch((error) => {
+// //get reading from current day
+// export const getTodaysEntry = (
+//     creator,
+// ) => {
+//     return axios
+//         .get(API_URL + 'entry/date/'+new Date().toISOString().split('T')[0]+'/creator/'+creator)
+//         .catch((error) => {
 
-            return null
-        })
-}
+//             return null
+//         })
+// }
 
 
 //create a new reading

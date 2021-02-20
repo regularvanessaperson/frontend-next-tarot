@@ -60,7 +60,7 @@ const Calendar = () => {
         }
         const birthdayStyle = { fontSize: '0.8em', textAlign: 'left' }
         const cellStyle = {
-            height: 50,
+            height: 60,
             width: 60,
             position: 'relative'
         }
@@ -85,7 +85,7 @@ const Calendar = () => {
             <>
                 {currentUser && (
                     <div>
-                        <div class='heading text-center font-bold text-2x1 m-5 text-gray-800'>Calendar</div>
+                        <div class='heading text-center font-bold text-2x1 m-5 text-gray-800 h-page'>Calendar</div>
                         {dates && (
                             <div>
                                 <div>
