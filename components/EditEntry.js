@@ -19,7 +19,7 @@ const EditEntry = () => {
             // Set current user to the currentUser state
             setCurrentUser(thisUser);
         }
-        getEntry(newIdx).then((value)=>{
+        getEntry(newIdx).then((value) => {
             if (value) {
                 setEntryId(value.data._id)
                 setEntry(value.data.body)
@@ -31,7 +31,7 @@ const EditEntry = () => {
 
     const handleEntry = (e) => {
         const body = entry
-        updateEntry(entryId,body)
+        updateEntry(entryId, body)
     }
     const onMakeEntry = (e) => {
         const entryText = e.target.value
@@ -41,9 +41,9 @@ const EditEntry = () => {
     const handleReading = (e) => {
         // e.preventDefault()
         if (entry) {
-            generateReading(entryId).then((response) =>{
+            generateReading(entryId).then((response) => {
                 setReading(response.data)
-                router.replace("/entry/entry/"+entryId)
+                router.replace("/entry/entry/" + entryId)
             })
         }
 
@@ -51,7 +51,7 @@ const EditEntry = () => {
 
     const enableEditing = () => {
         setDisabledForm(false)
-        router.replace("/entry/entry/"+entryId)
+        router.replace("/entry/entry/" + entryId)
     }
 
     return (
@@ -60,34 +60,34 @@ const EditEntry = () => {
                 {currentUser && (
                     <div>
                         <div className="heading text-center font-bold text-2xl m-5 text-gray-800">Welcome Back {currentUser.username}!</div>
-                                                    
-                            
-                                {disabledForm && (
-                                <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+
+
+                        {disabledForm && (
+                            <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
                                 <fieldset disabled="disabled">
-                                <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none w-full" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
+                                    <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none w-full" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
                                 </fieldset>
                                 <div className="buttons flex">
                                     {/* <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit">Save</button> */}
-                                    <Button handleClick={enableEditing} label="Edit Entry" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit"/>
-                                </div>            
-                                        </div>
-                                    )
-                                }
-                                 {!disabledForm && (
-                                     <form onSubmit={handleEntry}>
-                                        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
-                                <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
-                                <div className="buttons flex">
-                                    {/* <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit">Save</button> */}
-                                    <Button label="Update" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" handleClick={handleEntry} />
-                                </div>            
-                                        </div>
-                                        </form>
-                                    )
-                                }
-                            
-                        
+                                    <Button handleClick={enableEditing} label="Edit Entry" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit" />
+                                </div>
+                            </div>
+                        )
+                        }
+                        {!disabledForm && (
+                            <form onSubmit={handleEntry}>
+                                <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+                                    <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellCheck="false" value={entry} onChange={onMakeEntry} placeholder="Write a new journal entry..."></textarea>
+                                    <div className="buttons flex">
+                                        {/* <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value="Submit">Save</button> */}
+                                        <Button label="Update" className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" handleClick={handleEntry} />
+                                    </div>
+                                </div>
+                            </form>
+                        )
+                        }
+
+
                         <div>
                             <div>
                                 <div>
@@ -104,7 +104,7 @@ const EditEntry = () => {
                                                 <p>3. The third card represents the outcome.</p>
                                             </div>
                                             <div className="grid   justify-center mt-5 top-auto">
-                                                <Button disableCondition={reading} label={!reading ? "Generate Reading":"Reading for this entry has been generated"} className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e)=> handleReading(entry.id)} />
+                                                <Button disableCondition={reading} label={!reading ? "Generate Reading" : "Reading for this entry has been generated"} className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-auto bg-indigo-500" type="submit" value={reading} handleClick={(e) => handleReading(entry.id)} />
                                             </div>
                                         </div>
                                     </div>
@@ -119,14 +119,14 @@ const EditEntry = () => {
                                                     <p className="text-gray-800 font-semibold tracking-tighter">
                                                         Past</p>
                                                 </div>
-                                                
+
                                                 <p className="text-sm text-gray-700 mt-1" >
                                                     Description: {reading.firstCard.description}
                                                 </p>
                                                 <p className="text-sm text-gray-700 mt-1">
                                                     Meaning: {reading.firstCard.meaning}
                                                 </p>
-                                               
+
                                             </div>
                                         </div>
 
@@ -140,10 +140,10 @@ const EditEntry = () => {
                                                 </div>
                                                 <p className="text-sm text-gray-700 mt-1">
                                                     Description: {reading.secondCard.description}
-                                            </p>
+                                                </p>
                                                 <p className="text-sm text-gray-700 mt-1">
                                                     Meaning: {reading.thirdCard.meaning}
-                                            </p>
+                                                </p>
                                             </div>
                                         </div>
                                         <div className="md:flex shadow-lg  mx-6 md:mx-auto my-5 max-w-lg md:max-w-2xl h-page" >
@@ -156,16 +156,16 @@ const EditEntry = () => {
                                                 </div>
                                                 <p className="text-sm text-gray-700 mt-1">
                                                     Description: {reading.thirdCard.description}
-                                            </p>
+                                                </p>
                                                 <p className="text-sm text-gray-700 mt-1">
                                                     Meaning:{reading.thirdCard.meaning}
-                                            </p>
+                                                </p>
                                             </div>
                                         </div >
                                     </div>
-                                ): (
-                                    <div></div>
-                                )} 
+                                ) : (
+                                        <div></div>
+                                    )}
                             </div>
                         </div>
                     </div>
@@ -197,7 +197,7 @@ export const getEntry = (
     id,
 ) => {
     return axios
-        .get(API_URL + 'entry/'+id)
+        .get(API_URL + 'entry/' + id)
         .catch((error) => {
 
             return null
