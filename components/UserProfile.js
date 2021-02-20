@@ -38,7 +38,7 @@ const UserProfile = () => {
             console.log(response)
             const userInfo = response.data
             // console.log("Ids: ", userInfo._id, currentUser.id)
-            if (userInfo._id === thisUser.id) {
+            if (thisUser && userInfo._id === thisUser.id) {
                 setCurrent(true)
             }
             const profile = getUserProfile(userInfo)
