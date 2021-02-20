@@ -18,71 +18,59 @@ This app was created as a personal journal app that allows the user to pull a th
 
 The frontend has a simple design but it is easy to follow and is also very open to adding my stretch goals. For the purpose of the first version the goal was to be able to make and view all entrys and easily.
 
-# Landing page after user logs in
-![Home](images/HomePage.png)
+# Home page after user can be seen if you are logged in or not
+![Home](images/Home.png)
 
 # Link to Deployed App
 Link to come
 
 # Link to Backend Repo
-[Here](https://github.com/SFX818/Team-7-backend) is a link to our backend repo
-
+[Here](https://github.com/regularvanessaperson/tarot-journal-backend) is a link to the backend
 # Wireframes
-![Wireframes](images/Wireframe_Board.png)
+[Here](https://whimsical.com/tarot-journal-42KwyjgZVAM2FWca9JoNDe) is a link to the wireframes that can be viewed as they are updated. I didn't change the original layout that I was going for below are side by side images of the pages and the initial wireframes.
+![Wireframes](images/MakeEntry.png)
+![Wireframes](images/Edit.png)
+![Wireframes](images/Feed.png)
+
 
 # User Stories
 | As a user, I want to be able to...|
 |-|
-|Write a post that is visible to other users|
-|Categorize my post using hashtags|
-|Follow and unfollow other users |
-|Favorite posts|
-|Retweet posts|
-|Reply to posts|
-|View a feed of all posts|
-|View a feed of posts from users I follow|
-|View other user profiles|
-|View my favorited posts|
-|Search for topics (hashtags)|
+|Write a write an entry with or without a reading|
+|View all entrys by date|
+|Edit, favorite and delete entrys|
+|View a calendar marking days that I made a journal entry|
+|View favorite posts feed|
 
-# Frontend Tech Stack
+
+
 ## Fetching Data
 - Axios: allows us to make calls to send data to and retrieve data from our backend. We are also investigating integrating a Twitter API into our app.
 
+
 ## Architecture
-- React: building our fronted with the React library allows us to break our app down into reusable components, and helps us create a more user friendly experience because we are able to re-render only components whose state has changed without re-rendering other components.
+Backend: 
+- MongoDb
+- Express
+Frontend:
+- React
+- Node
+- Nextjs
 
-```
-App
-|
-|--Home
-|  |--Post(s)
-|  |   |--Replies
-|  |
-|  |--Searchbar
-|  |
-|  |--PostForm
-|
-|--Following
-|  |--Post(s)
-|
-|--Favorites
-|  |--Post(s)
-|
-|--UserProfile
-|  |--Post(s)
-      |--Following
-
-```
 
 ## Styling
-- Bootstrap
+- tailwindcss
 
 # Installation Instructions
 - Fork & clone this repo
 - cd into local directory and `npm install` to install dependencies
 
 # Problems/Challenges
-- We ran into an issue rendering posts for users a user follows because our data from the backend initially required iterating through a nested array. This resulted in posts displaying from a single user but broke when a user followed multiple users. This was ultimately resolved by reconfiguring a route on the backend and made our code more efficient because it cut out the need for an extra API call and subsequent nested array that came with it.
-- Since we did reuse our post component in every page that rendered current and other user's code there was a difference in how every object came through from the backend depending on how we set it up. At first we had to make promises to access the information we needed but ended up populating much of the backend so we could use in the frontend easily.
+- Nextjs is really nice to work with because the server side rendering will prepopulate components and make it faster to navigate the app. My downfall was that I completely built my backend first before learning Nextjs. If I had learned from the begining I could have integrated the Nextjs/Mongodb where I could have set up the routes on the frontend to fetch the data. Because of this I had a really hard time getting use to the file structure and took longer than I should have to complete the MVP.
+- There were issues with re-rendering the nav bar where even if logged in the nav bar would not update until the page is manually refreshed. This is also the case for the delete and favorite buttons where even though I use the router.push to transition the components only update after a while or if the page is refreshed manually.
+
+# Future Goals for this Tarot Journal
+- The user profile needs to be updated to include notes for the user, I built the backend for this but was not able to complete on the front end at this time. The notes are like sticky notes for the user to have aside from the journal entrys.
+- I have also already begun the route to render a 5 card reading, next steps are to give the option to render a 5 card reading instead of the 3 card reading.
+- Since this is a personal journal I wanted to give the user the oportunity to customize so I want to incorporate an input so the user can add their own background to the app since the layout is very simple.
 
