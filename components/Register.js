@@ -64,7 +64,6 @@ const vemail = (value) => {
     }
 }
 
-
 const Register = () => {
     const form = useRef()
     const checkBtn = useRef()
@@ -113,7 +112,7 @@ const Register = () => {
                     //if successful, login the new user and redirect to home page
                     login(username, password).then(
                         () => {
-                            router.replace("/")
+                            router.replace("/auth/login")
                         }
                     )
                 },

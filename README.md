@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 # Approach/Methodology
-This app was created as a personal journal app that allows the user to pull a three card reading for reflection. On the backend to generate a reading of random cardsI used an API (https://rws-cards-api.herokuapp.com/api/v1/cards/random?n=3). The user can easily make, edit, favorite and delete any entry as well as make an entry without a reading. On the backend I wanted to make it easier to expand the app for future stretch goals by making the routes easy to follow.
+This app was created as a personal journal app that allows the user to pull a three card reading for reflection. On the backend to generate a reading of random cardsI used an API (https://rws-cards-api.herokuapp.com/api/v1/cards/random?n=3) from [https://github.com/ekelen/tarot-api](https://github.com/ekelen/tarot-api). The user can easily make, edit, favorite and delete any entry as well as make an entry without a reading. On the backend I wanted to make it easier to expand the app for future stretch goals by making the routes easy to follow.
 
 The frontend has a simple design but it is easy to follow and is also very open to adding my stretch goals. For the purpose of the first version the goal was to be able to make and view all entrys and easily.
 
@@ -60,7 +60,7 @@ Frontend:
 
 ## Styling
 - tailwindcss
-- react-day-picker [https://react-day-picker.js.org/]
+- react-day-picker: [https://react-day-picker.js.org/](https://react-day-picker.js.org/)
 
 # Installation Instructions
 - Fork & clone this repo
