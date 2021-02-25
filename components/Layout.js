@@ -155,8 +155,8 @@ export const getCurrentUser = () => {
 export const userProfile = (
   idx
 ) => {
-  const API_URL = "http://localhost:8000/"//get user profile
-  return axios.get(API_URL + 'user/profile/' + idx)
+  const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;//get user profile
+  return axios.get(`${API_URL}/user/profile/${idx}`)
 }
 
 
