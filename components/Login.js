@@ -127,7 +127,7 @@ const Login = (props) => {
 
 export const login = (username, password) => {
     return axios
-    .post(`${API_URL}/auth/signin`, {
+    .post(`${API_URL}/api/auth/signin`, {
         username,
         password
     })
