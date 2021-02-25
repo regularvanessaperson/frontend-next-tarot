@@ -186,7 +186,7 @@ export const updateEntry = (
     body
 ) => {
     return axios
-        .put(`${API_URL}/entry/edit`, {
+        .put(`${API_URL}/api/entry/edit`, {
             _id,
             body
         })
@@ -197,7 +197,7 @@ export const getEntry = (
     id,
 ) => {
     return axios
-        .get(`${API_URL}/entry/${id}`)
+        .get(`${API_URL}/api/entry/${id}`)
         .catch((error) => {
 
             return null
@@ -210,7 +210,7 @@ export const generateReading = (
     entryId
 ) => {
     return axios
-        .post(`${API_URL}/reading`, {
+        .post(`${API_URL}/api/reading`, {
             entryId
         })
 }
@@ -219,7 +219,7 @@ export const generateReading = (
 export const getReading = (
     idx
 ) => {
-    return axios.get(`${API_URL}/reading/${idx}`)
+    return axios.get(`${API_URL}/api/reading/${idx}`)
 }
 
 export default EditEntry
