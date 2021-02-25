@@ -173,7 +173,7 @@ const MakeEntry = () => {
 
 
 
-const API_URL = "http://localhost:8000/api/"
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
 
 //create a new reading
 export const makeEntry = (
@@ -182,24 +182,13 @@ export const makeEntry = (
     readingId
 ) => {
     return axios
-        .post(API_URL + 'entry/make', {
+        .post(`${API_URL}/entry/make`, {
             creator,
             body,
             readingId
         })
 }
 
-// //get reading from current day
-// export const getTodaysEntry = (
-//     creator,
-// ) => {
-//     return axios
-//         .get(API_URL + 'entry/date/'+new Date().toISOString().split('T')[0]+'/creator/'+creator)
-//         .catch((error) => {
-
-//             return null
-//         })
-// }
 
 
 //create a new reading
@@ -207,7 +196,7 @@ export const generateReading = (
     entryId
 ) => {
     return axios
-        .post(API_URL + 'reading', {
+        .post(`${API_URL}/reading`, {
             entryId
         })
 }
@@ -217,7 +206,7 @@ export const generateReading = (
 export const getReading = (
     idx
 ) => {
-    return axios.get(API_URL + 'reading' + idx)
+    return axios.get(`${API_URL}/reading/${idx}`)
 }
 
 

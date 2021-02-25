@@ -17,7 +17,7 @@ import ButtonSpinner from './common/ButtonSpinner'
 // import { login } from '../pages/auth/login'
 import { resMessage } from '../utilities/functions.utilities'
 
-const API_URL="http://localhost:8000/api/auth/"
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
 
 const required = (value) => {
     if (!value) {
@@ -127,7 +127,7 @@ const Login = (props) => {
 
 export const login = (username, password) => {
     return axios
-    .post(API_URL+"signin", {
+    .post(`${API_URL}/auth/signin`, {
         username,
         password
     })

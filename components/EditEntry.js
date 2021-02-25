@@ -178,7 +178,7 @@ const EditEntry = () => {
 
 
 
-const API_URL = "http://localhost:8000/api/"
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
 
 //create a new reading
 export const updateEntry = (
@@ -186,7 +186,7 @@ export const updateEntry = (
     body
 ) => {
     return axios
-        .put(API_URL + 'entry/edit', {
+        .put(`${API_URL}/entry/edit`, {
             _id,
             body
         })
@@ -197,7 +197,7 @@ export const getEntry = (
     id,
 ) => {
     return axios
-        .get(API_URL + 'entry/' + id)
+        .get(`${API_URL}/entry/${id}`)
         .catch((error) => {
 
             return null
@@ -210,26 +210,16 @@ export const generateReading = (
     entryId
 ) => {
     return axios
-        .post(API_URL + 'reading', {
+        .post(`${API_URL}/reading`, {
             entryId
         })
 }
-
-// //create a new reading
-// export const generateFiveReading = (
-//     entryId
-// ) => {
-//     return axios
-//         .post(API_URL + 'five/reading', {
-//             entryId
-//         })
-// }
 
 
 export const getReading = (
     idx
 ) => {
-    return axios.get(API_URL + 'reading' + idx)
+    return axios.get(`${API_URL}/reading/${idx}`)
 }
 
 export default EditEntry

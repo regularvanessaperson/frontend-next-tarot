@@ -100,7 +100,7 @@ const Calendar = () => {
 
 }
 
-const API_URL = 'http://localhost:8000/api/'
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
 
 //get a months worth of entrys
 export const getMonthsEntry = (
@@ -108,7 +108,7 @@ export const getMonthsEntry = (
     theDate
 ) => {
     return axios
-        .get(API_URL + 'entry/month/' + theDate + '/creator/' + creator)
+        .get(`${API_URL}/entry/month/${theDate}/creator/${creator}`)
         .catch((error) => {
             return null
         })
