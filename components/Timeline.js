@@ -95,12 +95,12 @@ return (
 
 
 
-const API_URL = "http://localhost:8000/api/"
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
 //Follow a user
 export const feed = (
     idx
 ) => {
-    return axios.get(API_URL + 'user/entry/feed/' + idx, {
+    return axios.get(`${API_URL}/user/entry/feed/${idx}`, {
         idx
     })
 }
@@ -109,7 +109,7 @@ export const feed = (
 export const favorite = (
     _id
 ) => {
-    return axios.put(API_URL+"entry/favorite", {
+    return axios.put(`${API_URL}/entry/favorite`, {
         _id
     })
 }
@@ -119,7 +119,7 @@ export const deleteEntry = (
     _id
 ) => {
     return axios
-    .delete(API_URL+"entry/delete", {
+    .delete(`${API_URL}/entry/delete`, {
         data: {_id: _id}
     })
 }
