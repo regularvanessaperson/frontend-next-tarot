@@ -18,7 +18,7 @@ import {resMessage} from '../utilities/functions.utilities'
 import {login} from './Login'
 import { getCurrentUser } from "./Layout";
 
-const API_URL="http://localhost:8000/api/auth/"
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
 
 //Function given to react-validator
 const required = (value) => {
@@ -179,7 +179,7 @@ const Register = () => {
 
 export const register =(username, email, password) => {
     return axios
-    .post(API_URL+"signup", {
+    .post(`${API_URL}/auth/signup`, {
         username,
         email,
         password
