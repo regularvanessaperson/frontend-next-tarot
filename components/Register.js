@@ -179,7 +179,7 @@ const Register = () => {
 
 export const register =(username, email, password) => {
     return axios
-    .post(`${API_URL}/auth/signup`, {
+    .post(`${API_URL}/api/auth/signup`, {
         username,
         email,
         password

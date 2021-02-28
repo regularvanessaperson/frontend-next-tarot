@@ -206,7 +206,7 @@ export const generateReading = (
 export const getReading = (
     idx
 ) => {
-    return axios.get(`${API_URL}/reading/${idx}`)
+    return axios.get(`${API_URL}/api/reading/${idx}`)
 }
 
 

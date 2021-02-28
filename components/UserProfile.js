@@ -150,7 +150,7 @@ const UserProfile = () => {
 export const userProfile = (
     idx
 ) => {
-    return axios.get(`${API_URL}/user/profile/${idx}`)
+    return axios.get(`${API_URL}/api/user/profile/${idx}`)
 }
 
 //get current user
@@ -162,7 +162,7 @@ export const getCurrentUser = () => {
 export const feed = (
     idx
 ) => {
-    return axios.get(`${API_URL}/user/entry/feed/${idx}`, {
+    return axios.get(`${API_URL}/api/user/entry/feed/${idx}`, {
         idx
     })
 }
@@ -171,7 +171,7 @@ export const feed = (
 export const favorite = (
     _id
 ) => {
-    return axios.put(`${API_URL}/entry/favorite`, {
+    return axios.put(`${API_URL}/api/entry/favorite`, {
         _id
     })
 }
@@ -181,7 +181,7 @@ export const deleteEntry = (
     _id
 ) => {
     return axios
-        .delete(`${API_URL}/entry/delete`, {
+        .delete(`${API_URL}/api/entry/delete`, {
             data: { _id: _id }
         })
 }
