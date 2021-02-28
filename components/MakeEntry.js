@@ -173,7 +173,7 @@ const MakeEntry = () => {
 
 
 
-const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_REACT_APP_DEV_URL_USER : process.env.NEXT_PUBLIC_REACT_APP_PRO_URL_USER
 
 //create a new reading
 export const makeEntry = (
@@ -182,7 +182,7 @@ export const makeEntry = (
     readingId
 ) => {
     return axios
-        .post(`${API_URL}/entry/make`, {
+        .post(`${API_URL}/api/entry/make`, {
             creator,
             body,
             readingId
@@ -196,7 +196,7 @@ export const generateReading = (
     entryId
 ) => {
     return axios
-        .post(`${API_URL}/reading`, {
+        .post(`${API_URL}/api/reading`, {
             entryId
         })
 }
