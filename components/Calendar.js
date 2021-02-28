@@ -108,7 +108,7 @@ export const getMonthsEntry = (
     theDate
 ) => {
     return axios
-        .get(`${API_URL}/entry/month/${theDate}/creator/${creator}`)
+        .get(`${API_URL}/api/entry/month/${theDate}/creator/${creator}`)
         .catch((error) => {
             return null
         })

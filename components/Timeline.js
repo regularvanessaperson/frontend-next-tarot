@@ -100,7 +100,7 @@ const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_D
 export const feed = (
     idx
 ) => {
-    return axios.get(`${API_URL}/user/entry/feed/${idx}`, {
+    return axios.get(`${API_URL}/api/user/entry/feed/${idx}`, {
         idx
     })
 }
@@ -109,7 +109,7 @@ export const feed = (
 export const favorite = (
     _id
 ) => {
-    return axios.put(`${API_URL}/entry/favorite`, {
+    return axios.put(`${API_URL}/api/entry/favorite`, {
         _id
     })
 }
