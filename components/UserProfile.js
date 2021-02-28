@@ -6,7 +6,7 @@ import Button from './common/Button'
 import axios from 'axios'
 import Cors from 'cors'
 
-const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_REACT_APP_DEV_URL_USER : process.env.NEXT_PUBLIC_REACT_APP_PRO_URL_USER
 
 
 const UserProfile = () => {

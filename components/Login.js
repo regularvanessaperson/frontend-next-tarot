@@ -17,7 +17,8 @@ import ButtonSpinner from './common/ButtonSpinner'
 // import { login } from '../pages/auth/login'
 import { resMessage } from '../utilities/functions.utilities'
 
-const API_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_URL_USER : process.env.REACT_APP_PRO_URL_USER;
+console.log(process.env)
+const API_URL = process.env.NODE_ENV === 'development' ? process.env.NEXT_PUBLIC_REACT_APP_DEV_URL_USER : process.env.NEXT_PUBLIC_REACT_APP_PRO_URL_USER
 
 const required = (value) => {
     if (!value) {
@@ -56,11 +57,12 @@ const Login = (props) => {
         e.preventDefault()
 
         setMessage("")
-        
+        console.log("This is the API URL", API_URL)
         //validates all the fields
         form.current.validateAll()
         //validator stores errors and we can check if errors exist
         if (checkBtn.current.context._errors.length === 0) {
+            
             login(username, password).then(
                 (data) => {
                     setLoading(true)
@@ -126,6 +128,7 @@ const Login = (props) => {
 
 
 export const login = (username, password) => {
+    console.log(API_URL)
     return axios
     .post(`${API_URL}/api/auth/signin`, {
         username,
