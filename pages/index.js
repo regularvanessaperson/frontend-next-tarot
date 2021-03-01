@@ -9,7 +9,6 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title className='title'>Welcome to Tarot Journal Homepage ✨</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
     
     
