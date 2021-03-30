@@ -5,11 +5,12 @@
   "engines": {
     "node": "14.x"
   },
+  "cacheDirectories": [".next/cache"],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "heroku-postbuild": "npm start"
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "autoprefixer": "^10.2.4",

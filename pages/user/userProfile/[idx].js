@@ -1,7 +1,7 @@
 import UserProfile from '../../../components/UserProfile'
 
 const userProfile = () =>{
-    
+
     return <UserProfile  />
 }
 
